@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import hello.storage.StorageProperties;
-import hello.storage.StorageService;
+import com.meanymellow.bridgingfortomorrow.storage.StorageProperties;
+import com.meanymellow.bridgingfortomorrow.storage.StorageService;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
