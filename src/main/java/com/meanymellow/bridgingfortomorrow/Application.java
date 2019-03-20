@@ -1,4 +1,4 @@
-package bridgingfortomorrow;
+package com.meanymellow.bridgingfortomorrow;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
