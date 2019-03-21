@@ -40,6 +40,12 @@ public class FileSystemStorageService implements StorageService {
                         "Cannot store file with relative path outside current directory "
                                 + filename);
             }
+            if (!filename.contains(".csv")) {
+                // This is a security check
+                throw new StorageException(
+                        "Can only load in files of the CSV format "
+                                + filename);
+            }
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, this.rootLocation.resolve(filename),
                     StandardCopyOption.REPLACE_EXISTING);
