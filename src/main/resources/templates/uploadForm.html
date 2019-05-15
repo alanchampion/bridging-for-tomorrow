@@ -27,7 +27,10 @@
     </ul>
   </div>
 
-  <div>
+  <div th:if="${files!=null and !files.empty}">
+    <form method="GET" action="groups">
+      <input type="submit" value="Create Groups" />
+    </form>
   </div>
 
 </body>
