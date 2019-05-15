@@ -18,9 +18,14 @@
     <ul>
       <li th:each="file : ${files}">
         <a th:href="${file}" th:text="${file}" />
-        <a th:href="@{__${file}__/delete}" th:text="delete" />
+        <form method="DELETE" enctype="multipart/form-data" action="${file}">
+          <input type="submit" value="Delete" />
+        </form>
       </li>
     </ul>
+  </div>
+
+  <div>
   </div>
 
 </body>
