@@ -47,7 +47,7 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @DeleteMapping("/files/{filename:.+}/delete")
+    @GetMapping("/files/{filename:.+}/delete")
     @ResponseBody
     public ResponseEntity<String> deleteFile(@PathVariable String filename) {
 
