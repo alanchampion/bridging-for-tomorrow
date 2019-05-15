@@ -49,10 +49,10 @@ public class FileUploadController {
 
     @GetMapping("/files/{filename:.+}/delete")
     @ResponseBody
-    public ResponseEntity<String> deleteFile(@PathVariable String filename) {
+    public String deleteFile(@PathVariable String filename) {
 
         storageService.delete(filename);
-        return ResponseEntity.noContent().build();
+        return "redirect:/";
     }
 
     @PostMapping("/")
