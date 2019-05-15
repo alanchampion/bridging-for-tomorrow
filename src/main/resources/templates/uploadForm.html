@@ -18,6 +18,7 @@
     <ul>
       <li th:each="file : ${files}">
         <a th:href="${file}" th:text="${file}" />
+        <a th:href="${file}/delete" th:text="delete" />
       </li>
     </ul>
   </div>
