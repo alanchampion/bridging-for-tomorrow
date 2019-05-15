@@ -47,7 +47,7 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @DeleteMapping("/files/{filename:.+}")
+    @GetMapping("/files/{filename:.+}/delete")
     public String deleteFile(@PathVariable String filename, RedirectAttributes redirectAttributes) {
 
         storageService.delete(filename);
