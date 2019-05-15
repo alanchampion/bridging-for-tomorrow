@@ -49,9 +49,10 @@ public class FileUploadController {
 
     @GetMapping("/files/{filename:.+}/delete")
     @ResponseBody
-    public String deleteFile(@PathVariable String filename) {
+    public String deleteFile(@PathVariable String filename, RedirectAttributes redirectAttributes) {
 
         storageService.delete(filename);
+        redirectAttributes.addFlashAttribute("message", "You successfully deleted " + filename + "!");
         return "redirect:/";
     }
 
