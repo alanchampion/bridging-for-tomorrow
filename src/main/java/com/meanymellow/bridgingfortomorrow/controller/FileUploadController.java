@@ -1,4 +1,4 @@
-package com.meanymellow.bridgingfortomorrow;
+package com.meanymellow.bridgingfortomorrow.controller;
 
 import java.io.IOException;
 import java.util.stream.Collectors;

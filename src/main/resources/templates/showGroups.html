@@ -13,5 +13,14 @@
     <p>Create Groups</p>
 </div>
 
+<div>
+    <ul>
+        <li th:each="file : ${files}">
+            <a th:href="${file}" th:text="${file}" />
+            <a th:href="@{__${file}__/delete}" th:text="delete" />
+        </li>
+    </ul>
+</div>
+
 </body>
 </html>
