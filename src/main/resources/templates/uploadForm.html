@@ -10,7 +10,7 @@
   </div>
 
   <div>
-    <form method="POST" enctype="multipart/form-data" action="/">
+    <form method="POST" enctype="multipart/form-data" action="/upload">
       <table>
         <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
         <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
@@ -28,10 +28,14 @@
   </div>
 
   <div th:if="${files!=null and !files.empty}">
-    <form method="GET" action="groups">
-      <input type="submit" value="Create Groups" />
+    <form method="POST" action="/addupload">
+      <input type="submit" value="Add Students" />
     </form>
   </div>
+
+<div>
+  <a href="/"><button>Cancel</button></a>
+</div>
 
 </body>
 </html>

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.meanymellow.bridgingfortomorrow.model.Student;
+import com.meanymellow.bridgingfortomorrow.storage.StudentStorage;
 import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,15 @@ import com.meanymellow.bridgingfortomorrow.storage.StorageService;
 public class DataManipulationController {
 
     private final StorageService storageService;
+    private final StudentStorage studentStorage;;
 
     @Autowired
-    public DataManipulationController(StorageService storageService) {
+    public DataManipulationController(StorageService storageService, StudentStorage studentStorage) {
         this.storageService = storageService;
+        this.studentStorage = studentStorage;
     }
 
-    @GetMapping("/groups")
+@PostMapping("/addupload")
     public String createGroups(Model model) throws IOException {
         List<Student> students = new ArrayList<Student>();
 
@@ -81,7 +84,8 @@ public class DataManipulationController {
             }
         });
 
+        studentStorage.saveAll(students);
 
-        return "showGroups";
+        return "redirect:/";
     }
 }

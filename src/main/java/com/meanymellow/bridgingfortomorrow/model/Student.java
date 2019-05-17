@@ -3,6 +3,8 @@ package com.meanymellow.bridgingfortomorrow.model;
 public class Student {
     private String firstName, lastName, school, gender, grade;
 
+    public Student() {}
+
     public Student(String grade, String firstName, String lastName, String school, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;

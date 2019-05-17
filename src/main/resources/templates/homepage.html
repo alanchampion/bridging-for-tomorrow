@@ -10,15 +10,13 @@
 </div>
 
 <div>
-    <ul>
-        <li th:each="file : ${files}">
-            <a th:href="${file}" th:text="${file}" />
-            <a th:href="@{__${file}__/delete}" th:text="delete" />
-        </li>
-    </ul>
+    <a href='input'><button>Input Students</button></a>
+    <a href="upload"><button>Upload CSV</button></a>
+    <a href="groups"><button>Create Groups</button></a>
 </div>
 
 <div>
+    <h3>Students</h3>
     <table cellpadding="7em">
         <thead>
         <tr>
