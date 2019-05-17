@@ -88,4 +88,10 @@ public class DataManipulationController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/deleteall")
+    public String deleteAll(Model model) throws IOException {
+        studentStorage.removeAll();
+        return "redirect:/";
+    }
 }

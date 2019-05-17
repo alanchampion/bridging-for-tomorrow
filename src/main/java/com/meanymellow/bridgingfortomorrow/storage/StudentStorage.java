@@ -42,4 +42,8 @@ public class StudentStorage {
     public List<Student> findAll() {
         return this.students;
     }
+
+    public void removeAll() {
+        this.students.clear();
+    }
 }
