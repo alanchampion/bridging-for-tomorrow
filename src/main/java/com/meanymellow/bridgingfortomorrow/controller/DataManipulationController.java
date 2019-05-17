@@ -1,6 +1,6 @@
 package com.meanymellow.bridgingfortomorrow.controller;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,31 @@ public class DataManipulationController {
     }
 
     @GetMapping("/groups")
-    public String listUploadedFiles(Model model) throws IOException {
+    public String createGroups(Model model) throws IOException {
 
         model.addAttribute("files", storageService.loadAll().map(
                 path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
                         "serveFile", path.getFileName().toString()).build().toString())
                 .collect(Collectors.toList()));
+
+        storageService.loadAll().forEach(path -> {
+            BufferedReader br = null;
+            try {
+                System.out.println("Get File Name: " + path.getFileName().toString());
+                System.out.println("To File Absolute: " + path.toFile().getAbsolutePath());
+                System.out.println("To File Canonical: " + path.toFile().getCanonicalPath());
+                System.out.println("To File Path: " + path.toFile().getPath());
+                System.out.println("To File Name: " + path.toFile().getName());
+                br = new BufferedReader(new FileReader(path.toFile()));
+                System.out.println(br.readLine());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
         return "showGroups";
     }
 }
