@@ -5,6 +5,15 @@
     <h1>Bridging for Tomorrow</h1>
   </div>
 
+  <div>
+    <h2>Instructions</h2>
+    <h4>Create a file in excel or other spreadsheet program.</h4>
+    <h4>Label rows as "First Name", "Last Name", "Grade", "School", and "Gender".</h4>
+    <h4>Input data then file > save as > save as CSV.</h4>
+    <h4>On the website, choose the file(s) then click "Upload" and "Add Students".</h4>
+    <br>
+  </div>
+
   <div th:if="${message}">
     <h3 th:text="${message}"/>
   </div>
@@ -21,7 +30,7 @@
   <div>
     <ul>
       <li th:each="file : ${files}">
-        <a th:href="${file}" th:text="${file}" />
+        <span th:text="${file}" />
         <a th:href="@{__${file}__/delete}" th:text="delete" />
       </li>
     </ul>
