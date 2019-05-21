@@ -1,5 +1,7 @@
 package com.meanymellow.bridgingfortomorrow.model;
 
+import java.util.Objects;
+
 public class Student {
     private String firstName, lastName, school, gender, grade;
 
@@ -51,5 +53,22 @@ public class Student {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(getFirstName(), student.getFirstName()) &&
+                Objects.equals(getLastName(), student.getLastName()) &&
+                Objects.equals(getSchool(), student.getSchool()) &&
+                Objects.equals(getGender(), student.getGender()) &&
+                Objects.equals(getGrade(), student.getGrade());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName(), getSchool(), getGender(), getGrade());
     }
 }
