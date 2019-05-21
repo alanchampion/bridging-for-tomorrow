@@ -1,5 +1,6 @@
 package com.meanymellow.bridgingfortomorrow.controller;
 
+import com.meanymellow.bridgingfortomorrow.Util;
 import com.meanymellow.bridgingfortomorrow.model.Student;
 import com.meanymellow.bridgingfortomorrow.model.StudentCreation;
 import com.meanymellow.bridgingfortomorrow.storage.StorageService;
@@ -43,6 +44,7 @@ public class StudentInputController {
     @GetMapping("/groups")
     public String showAll(Model model) {
         model.addAttribute("students", studentStorage.findAll());
+        model.addAttribute("groups", Util.createGroups(studentStorage.findAll()));
         return "showGroups";
     }
 

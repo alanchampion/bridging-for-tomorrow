@@ -87,8 +87,8 @@ public class FileUploadController {
         storageService.loadAll().forEach(path -> {
             try {
                 File file = storageService.loadAsResource(path.getFileName().toString()).getFile();
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                System.out.println(br.readLine());
+                // BufferedReader br = new BufferedReader(new FileReader(file));
+                // System.out.println(br.readLine());
 
                 try (CSVReader csvReader = new CSVReader(new FileReader(file))) {
                     String[] values = null;
@@ -118,7 +118,7 @@ public class FileUploadController {
                     }
                     while ((values = csvReader.readNext()) != null) {
                         students.add(new Student(values[grade], values[firstName], values[lastName], values[school], values[gender]));
-                        System.out.println(Arrays.toString(values));
+                        // System.out.println(Arrays.toString(values));
                     }
                 }
             } catch (FileNotFoundException e) {

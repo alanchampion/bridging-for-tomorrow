@@ -18,7 +18,11 @@
     </ul>
 </div>
 
-<div>
+<div th:if="${groups.empty}">
+    <h3>No Students Found</h3>
+</div>
+
+<div th:each="group : ${groups}">
     <table cellpadding="7em">
         <thead>
         <tr>
@@ -30,18 +34,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${students.empty}">
-            <td colspan="5"> No Students Found. Is something not formatted correctly? </td>
-        </tr>
-        <tr th:each="student : ${students}">
-            <td><span th:text="${student.firstName}"> First Name </span></td>
-            <td><span th:text="${student.lastName}"> Last Name </span></td>
-            <td><span th:text="${student.grade}"> Grade </span></td>
-            <td><span th:text="${student.school}"> School </span></td>
-            <td><span th:text="${student.gender}"> Gender </span></td>
-        </tr>
+            <tr th:each="student : ${group}">
+                <td><span th:text="${student.firstName}"> First Name </span></td>
+                <td><span th:text="${student.lastName}"> Last Name </span></td>
+                <td><span th:text="${student.grade}"> Grade </span></td>
+                <td><span th:text="${student.school}"> School </span></td>
+                <td><span th:text="${student.gender}"> Gender </span></td>
+            </tr>
         </tbody>
     </table>
+    <br/>
+    <br/>
 </div>
 
 </body>

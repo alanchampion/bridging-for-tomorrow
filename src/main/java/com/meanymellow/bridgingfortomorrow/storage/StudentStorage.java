@@ -1,5 +1,6 @@
 package com.meanymellow.bridgingfortomorrow.storage;
 
+import com.meanymellow.bridgingfortomorrow.Util;
 import com.meanymellow.bridgingfortomorrow.model.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -36,7 +37,10 @@ public class StudentStorage {
     }
 
     public void saveAll(List<Student> students) {
-        this.students.addAll(students);
+        for(Student student : students) {
+            this.students.add(Util.cleanUp(student));
+        }
+        // this.students.addAll(students);
     }
 
     public List<Student> findAll() {
