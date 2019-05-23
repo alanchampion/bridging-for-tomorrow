@@ -10,7 +10,7 @@
     <h4>Create a file in excel or other spreadsheet program.</h4>
     <h4>Label rows as "First Name", "Last Name", "Grade", "School", and "Gender".</h4>
     <h4>Input data then file > save as > save as CSV.</h4>
-    <h4>On the website, choose the file(s) then click "Upload" and "Add Students".</h4>
+    <h4>On the website, choose the file then click "Add Students".</h4>
     <br>
   </div>
 
@@ -22,25 +22,25 @@
     <form method="POST" enctype="multipart/form-data" action="/upload">
       <table>
         <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-        <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        <tr><td></td><td><input type="submit" value="Add Students" /></td></tr>
       </table>
     </form>
   </div>
 
-  <div>
+  <!--<div>
     <ul>
       <li th:each="file : ${files}">
         <span th:text="${file}" />
         <a th:href="@{__${file}__/delete}" th:text="delete" />
       </li>
     </ul>
-  </div>
+  </div>-->
 
-  <div th:if="${files!=null and !files.empty}">
+  <!--<div th:if="${files!=null and !files.empty}">
     <form method="POST" action="/addupload">
       <input type="submit" value="Add Students" />
     </form>
-  </div>
+  </div>-->
 
 <div>
   <a href="/"><button>Cancel</button></a>

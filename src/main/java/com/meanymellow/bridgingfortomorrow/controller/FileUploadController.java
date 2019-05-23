@@ -65,24 +65,27 @@ public class FileUploadController {
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
             RedirectAttributes redirectAttributes) {
-
+        if(file.isEmpty()) {
+            redirectAttributes.addFlashAttribute("message","Please select a file before uploading!");
+            return "redirect:upload";
+        }
         storageService.store(file);
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/upload";
+        return "redirect:/addupload";
     }
 
-    @PostMapping("/addupload")
-    public String createGroups(Model model) throws IOException {
+    @GetMapping("/addupload")
+    public String createGroups(/*Model model, */RedirectAttributes redirectAttributes) throws IOException {
         List<Student> students = new ArrayList<Student>();
 
-        model.addAttribute("files", storageService.loadAll().map(
+        /*model.addAttribute("files", storageService.loadAll().map(
                 path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
                         "serveFile", path.getFileName().toString()).build().toString())
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()));*/
 
-        model.addAttribute("students", students);
+        // model.addAttribute("students", students);
 
         storageService.loadAll().forEach(path -> {
             try {
@@ -114,20 +117,26 @@ public class FileUploadController {
                     }
                     if(grade == -1 || firstName == -1 || lastName == -1 || school == -1 || gender == -1) {
                         // TODO Print something out for the user.
+                        redirectAttributes.addFlashAttribute("message", "Error reading " + path.getFileName() + ". CSV not formatted correctly.");
                         System.out.println("Error. CSV is not formatted correctly");
                     }
                     while ((values = csvReader.readNext()) != null) {
                         students.add(new Student(values[grade], values[firstName], values[lastName], values[school], values[gender]));
+                        redirectAttributes.addFlashAttribute("message", "Finished uploading " + path.getFileName() + "!");
                         // System.out.println(Arrays.toString(values));
                     }
                 }
             } catch (FileNotFoundException e) {
+                redirectAttributes.addFlashAttribute("message", "Error reading file. File not found.");
                 e.printStackTrace();
             } catch (IOException e) {
+                redirectAttributes.addFlashAttribute("message", "Error reading " + path.getFileName() + ". CSV not formatted correctly.");
                 e.printStackTrace();
             }
         });
 
+        storageService.deleteAll();
+        storageService.init();
         studentStorage.saveAll(students);
 
         return "redirect:/";
