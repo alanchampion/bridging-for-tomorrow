@@ -56,6 +56,17 @@ public class Student {
     }
 
     @Override
+    public String toString() {
+        return "Student{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", school='" + school + '\'' +
+                ", gender='" + gender + '\'' +
+                ", grade='" + grade + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

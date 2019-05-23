@@ -25,6 +25,7 @@
 <div th:each="group : ${groups}">
     <table cellpadding="7em">
         <thead>
+        <caption th:text="${group.name}"></caption>
         <tr>
             <th> First Name </th>
             <th> Last Name </th>
@@ -34,7 +35,7 @@
         </tr>
         </thead>
         <tbody>
-            <tr th:each="student : ${group}">
+            <tr th:each="student : ${group.students}">
                 <td><span th:text="${student.firstName}"> First Name </span></td>
                 <td><span th:text="${student.lastName}"> Last Name </span></td>
                 <td><span th:text="${student.grade}"> Grade </span></td>

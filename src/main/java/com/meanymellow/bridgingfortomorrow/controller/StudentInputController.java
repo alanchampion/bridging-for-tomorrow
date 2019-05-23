@@ -3,7 +3,6 @@ package com.meanymellow.bridgingfortomorrow.controller;
 import com.meanymellow.bridgingfortomorrow.Util;
 import com.meanymellow.bridgingfortomorrow.model.Student;
 import com.meanymellow.bridgingfortomorrow.model.StudentCreation;
-import com.meanymellow.bridgingfortomorrow.storage.StorageService;
 import com.meanymellow.bridgingfortomorrow.storage.StudentStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,14 +36,14 @@ public class StudentInputController {
     public String saveStudents(@ModelAttribute StudentCreation form, Model model) {
         studentStorage.saveAll(form.getStudents());
 
-        model.addAttribute("students", studentStorage.findAll());
+        model.addAttribute("students", studentStorage.getAll());
         return "redirect:/input";
     }
 
     @GetMapping("/groups")
     public String showAll(Model model) {
-        model.addAttribute("students", studentStorage.findAll());
-        model.addAttribute("groups", Util.createGroups(studentStorage.findAll()));
+        model.addAttribute("students", studentStorage.getAll());
+        model.addAttribute("groups", Util.createGroups(studentStorage));
         return "showGroups";
     }
 
