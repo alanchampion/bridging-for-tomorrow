@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Student {
     private String firstName, lastName, school, gender, grade;
+    private int id;
 
     public Student() {}
 
@@ -13,6 +14,14 @@ public class Student {
         this.grade = grade;
         this.school = school;
         this.gender = gender;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getGrade() {

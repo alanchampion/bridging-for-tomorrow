@@ -7,9 +7,8 @@ import com.meanymellow.bridgingfortomorrow.storage.StudentStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class StudentInputController {
@@ -45,6 +44,22 @@ public class StudentInputController {
         model.addAttribute("students", studentStorage.getAll());
         model.addAttribute("groups", Util.createGroups(studentStorage));
         return "showGroups";
+    }
+
+    @GetMapping("/student/{id}")
+    public String getStudent(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("student", studentStorage.getStudent(id));
+        return "student";
+    }
+
+    @GetMapping("/student/{id}/delete")
+    public String deleteStudent(@PathVariable int id, RedirectAttributes redirectAttributes) {
+        boolean success = studentStorage.delete(id);
+        if(success)
+            redirectAttributes.addFlashAttribute("message", "You successfully deleted the student!");
+        else
+            redirectAttributes.addFlashAttribute("message", "Unable to find student to delete!");
+        return "redirect:/";
     }
 
     // TODO have a way to remove a student.

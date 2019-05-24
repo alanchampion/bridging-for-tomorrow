@@ -12,18 +12,51 @@ import java.util.*;
 
 @Service
 public class StudentStorage {
-
     final private List<Student> students = new ArrayList<>();
+    private int currentId;
+
+    public StudentStorage() {
+        currentId = 280;
+    }
 
     public void saveAll(List<Student> students) {
         for(Student student : students) {
-            this.students.add(Util.cleanUp(student));
+            save(student);
         }
-        // this.students.addAll(students);
+    }
+
+    public void save(Student student) {
+        Student clean = Util.cleanUp(student);
+        clean.setId(currentId);
+        currentId++;
+        this.students.add(clean);
+    }
+
+    public Student getStudent(int id) {
+        Iterator<Student> i = this.students.iterator();
+        while(i.hasNext()) {
+            Student student = i.next();
+            if(student.getId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public boolean delete(int id) {
+        Iterator<Student> i = this.students.iterator();
+        while(i.hasNext()) {
+            Student student = i.next();
+            if(student.getId() == id) {
+                i.remove();
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Student> getAll() {
-        return new ArrayList<Student>(this.students);
+        return new ArrayList<>(this.students);
     }
 
     public Map<String, List<Student>> getAllGrades() {

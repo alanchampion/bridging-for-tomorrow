@@ -20,9 +20,7 @@
 </div>
 
 <div>
-    <a href='input'><button>Input Students</button></a>
-    <a href="upload"><button>Upload CSV</button></a>
-    <a href="groups"><button>Create Groups</button></a>
+    <a href='/'><button>Back</button></a>
 </div>
 
 <div>
@@ -35,29 +33,26 @@
             <th> Grade </th>
             <th> School </th>
             <th> Gender </th>
-            <th></th>
-            <th></th>
+            <th> Edit </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${students.empty}">
-            <td colspan="5"> No Students Found. Is something not formatted correctly? </td>
-        </tr>
-        <tr th:each="student : ${students}">
+        <!--<tr th:if="${student}">
+            <td colspan="5"> No Student Found. Has this student been deleted? </td>
+        </tr>-->
+        <tr>
             <td><span th:text="${student.firstName}"> First Name </span></td>
             <td><span th:text="${student.lastName}"> Last Name </span></td>
             <td><span th:text="${student.grade}"> Grade </span></td>
             <td><span th:text="${student.school}"> School </span></td>
             <td><span th:text="${student.gender}"> Gender </span></td>
-            <td><a th:href="@{student/__${student.id}__}" ><button> Edit </button></a></td>
-            <td><a th:href="@{student/__${student.id}__/delete}" ><button> Delete </button></a></td>
         </tr>
         </tbody>
     </table>
 </div>
 
 <div>
-    <a href="/deleteall"><button>Remove All</button></a>
+    <a th:href="@{/student/__${student.id}__/delete}"><button>Delete Student</button></a>
 </div>
 
 </body>
