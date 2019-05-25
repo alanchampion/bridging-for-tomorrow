@@ -43,6 +43,18 @@ public class StudentStorage {
         return null;
     }
 
+    public boolean update(int id, Student student) {
+        for(int i = 0; i < students.size(); i++) {
+            if(students.get(i).getId() == id) {
+                students.remove(i);
+                students.add(i, student);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean delete(int id) {
         Iterator<Student> i = this.students.iterator();
         while(i.hasNext()) {

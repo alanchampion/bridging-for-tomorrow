@@ -48,6 +48,8 @@ public class StudentInputController {
 
     @GetMapping("/student/{id}")
     public String getStudent(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+        Student studentForm = studentStorage.getStudent(id);
+//        model.addAttribute("form", studentForm);
         model.addAttribute("student", studentStorage.getStudent(id));
         return "student";
     }
@@ -59,6 +61,16 @@ public class StudentInputController {
             redirectAttributes.addFlashAttribute("message", "You successfully deleted the student!");
         else
             redirectAttributes.addFlashAttribute("message", "Unable to find student to delete!");
+        return "redirect:/";
+    }
+
+    @PostMapping("/student/{id}/save")
+    public String saveStudent(@PathVariable int id, @ModelAttribute Student student,RedirectAttributes redirectAttributes) {
+        boolean success = studentStorage.update(id, student);
+        if(success)
+            redirectAttributes.addFlashAttribute("message", "You successfully updated the student!");
+        else
+            redirectAttributes.addFlashAttribute("message", "Unable to find student to update!");
         return "redirect:/";
     }
 
