@@ -1,7 +1,10 @@
 package com.meanymellow.bridgingfortomorrow.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,12 +21,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("Password: " + System.getenv("password"));
+        System.out.println("Username: " + System.getenv("username"));
+        System.out.println("Admin Password: " + System.getenv("admin_password"));
+        System.out.println("Admin Username: " + System.getenv("admin_username"));
         auth.inMemoryAuthentication()
-                .withUser("faithbridge").password(passwordEncoder().encode("4thecommunity")).roles("USER")
+                .withUser(System.getenv("username")).password(passwordEncoder().encode(System.getenv("password"))).roles("USER")
                 .and()
                 // .withUser("user2").password(passwordEncoder().encode("user2Pass")).roles("USER")
                 // .and()
-                .withUser("meanymellow").password(passwordEncoder().encode("J1b6N7w6!e5k%WK1")).roles("ADMIN");
+                .withUser(System.getenv("admin_username")).password(passwordEncoder().encode(System.getenv("admin_password"))).roles("ADMIN");
     }
 
     @Override
