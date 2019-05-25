@@ -32,6 +32,7 @@ public class GroupSorter {
 
     public void sort() {
         int i = 0;
+        roughNumGroups = students.size()/6;
         do {
             trySort();
             students.clear();
@@ -47,14 +48,16 @@ public class GroupSorter {
     }
 
     public void trySort() {
-        roughNumGroups = students.size()/6;
         for(int j = 0; j < roughNumGroups+1; j++) {
             Collections.shuffle(students);
             Iterator<Student> i = students.iterator();
             while (i.hasNext()) {
                 Student student = i.next();
-
-                if (tryAddStudent(student)) {
+                /*if(student.getGrade().equals("-1")) {
+                    badGroup.forceAddStudent(student);
+                    i.remove();
+                    System.out.println("Force added student: " + student);
+                } else */if (tryAddStudent(student)) {
                     i.remove();
                     System.out.println("Added student: " + student);
                 }
@@ -65,6 +68,7 @@ public class GroupSorter {
         while(i.hasNext()) {
             Student student = i.next();
             forceAddStudent(student);
+            System.out.println("Force added student: " + student);
             i.remove();
         }
     }
@@ -200,16 +204,42 @@ public class GroupSorter {
     }
 
     public List<Group> getGroups() {
+        int redGroups = 1, orangeGroups = 1, yellowGroups = 1;
+
         for(Group group : okGroups) {
-            group.setName("Ok Group");
+            GroupType type = group.getGroupType();
+            if(type == GroupType.KFIRST) {
+                group.setName("Red Group " + redGroups);
+                redGroups++;
+            } else if(type == GroupType.SECONDTHIRD) {
+                group.setName("Orange Group " + orangeGroups);
+                orangeGroups++;
+            } else if(type == GroupType.FOURTHFIFTH) {
+                group.setName("Yellow Group " + yellowGroups);
+                yellowGroups++;
+            } else {
+                group.setName("Ok Group");
+            }
         }
         for(Group group : perfectGroups) {
-            group.setName("Perfect Group");
+            GroupType type = group.getGroupType();
+            if(type == GroupType.KFIRST) {
+                group.setName("Red Group " + redGroups);
+                redGroups++;
+            } else if(type == GroupType.SECONDTHIRD) {
+                group.setName("Orange Group " + orangeGroups);
+                orangeGroups++;
+            } else if(type == GroupType.FOURTHFIFTH) {
+                group.setName("Yellow Group " + yellowGroups);
+                yellowGroups++;
+            } else {
+                group.setName("Perfect Group");
+            }
         }
         for(Group group : incompleteGroups) {
-            group.setName("Incomplete Group");
+            group.setName("Incomplete Group. These groups should be redistributed or retry sorting below.");
         }
-        badGroup.setName("Bad Group");
+        badGroup.setName("Error group. Try to retry the sorting below.");
 
         List<Group> groups = new ArrayList<>();
         groups.addAll(okGroups);
