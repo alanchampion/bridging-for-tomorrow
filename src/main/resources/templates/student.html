@@ -1,14 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<!--<head>
+<head>
     <title>Bridging for Tomorrow</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/animate.css}" href="../static/css/animate.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-select.min.css}" href="../static/css/bootstrap-select.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-theme.css}" href="../static/css/bootstrap-theme.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/carousel.css}" href="../static/css/carousel.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" href="../static/css/font-awesome.min.css"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/prettyPhoto.css}" href="../static/css/prettyPhoto.css"/>
-</head>-->
+    <script type="text/javascript" th:src="@{/js/main.js}" src="/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="/css/main.css"/>
+</head>
 <body>
 
 <div>
@@ -20,32 +15,7 @@
 </div>
 
 <div>
-    <a href='/'><button>Back</button></a>
-</div>
-
-<div>
-    <h3>Students</h3>
-    <!--<table cellpadding="7em">
-        <thead>
-        <tr>
-            <th> First Name </th>
-            <th> Last Name </th>
-            <th> Grade </th>
-            <th> School </th>
-            <th> Gender </th>
-            <th> Edit </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><span th:text="${student.firstName}"> First Name </span></td>
-            <td><span th:text="${student.lastName}"> Last Name </span></td>
-            <td><span th:text="${student.grade}"> Grade </span></td>
-            <td><span th:text="${student.school}"> School </span></td>
-            <td><span th:text="${student.gender}"> Gender </span></td>
-        </tr>
-        </tbody>
-    </table>-->
+    <h3 th:text="${student.firstName + ' ' + student.lastName}"></h3>
     <form action="#" th:action="@{/student/__${student.id}__/save}" th:object="${student}"
           method="post">
         <fieldset>
@@ -76,12 +46,13 @@
             </table>
             <input type="submit" id="submitButton" th:value="Save">
             <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+            <a th:href="@{/student/__${student.id}__/delete}"><button type="button">Delete Student</button></a>
         </fieldset>
     </form>
 </div>
 
 <div>
-    <a th:href="@{/student/__${student.id}__/delete}"><button>Delete Student</button></a>
+    <a href='/'><button>Cancel</button></a>
 </div>
 
 </body>

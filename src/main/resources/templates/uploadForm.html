@@ -1,4 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bridging for Tomorrow</title>
+  <script type="text/javascript" th:src="@{/js/main.js}" src="/js/main.js"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="/css/main.css"/>
+</head>
 <body>
 
   <div>
@@ -21,9 +26,10 @@
   <div>
     <form method="POST" enctype="multipart/form-data" action="/upload">
       <table>
-        <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-        <tr><td></td><td><input type="submit" value="Add Students" /></td></tr>
+        <tr><td>File to upload:</td><td><button type="button"><input type="file" name="file" /></button></td></tr>
       </table>
+      <input type="submit" value="Add Students" />
+      <a href="/"><button type="button">Cancel</button></a>
     </form>
   </div>
 
@@ -41,10 +47,6 @@
       <input type="submit" value="Add Students" />
     </form>
   </div>-->
-
-<div>
-  <a href="/"><button>Cancel</button></a>
-</div>
 
 </body>
 </html>
