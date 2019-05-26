@@ -19,10 +19,18 @@
 
   <div>
     <form method="POST" enctype="multipart/form-data" action="/upload">
-      <table>
-        <tr><td>File to upload:</td><td><button type="button"><input type="file" name="file" /></button></td></tr>
-      </table>
-      <input type="submit" value="Add Students" />
+      <!--<table>
+        <tr>
+          <td>File to upload:</td>
+          <td>
+            <button type="button"><input type="file" name="file" /></button>
+          </td>
+        </tr>
+      </table>-->
+      <h5 style="margin-left: 1em;">File to upload: <button type="button"><input type="file" name="file" /></button></h5>
+      <br>
+<!--      <input type="submit" value="Add Students" />-->
+      <button type="submit">Add Students</button>
       <a href="/"><button type="button">Cancel</button></a>
     </form>
   </div>

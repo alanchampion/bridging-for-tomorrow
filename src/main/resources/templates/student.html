@@ -34,8 +34,8 @@
                 </tr>
                 </tbody>
             </table>
-            <input type="submit" id="submitButton" th:value="Save">
-            <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+            <button type="submit">Save</button>
+            <button type="reset">Reset</button>
             <a th:href="@{/student/__${student.id}__/delete}"><button type="button">Delete Student</button></a>
         </fieldset>
     </form>

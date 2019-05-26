@@ -4,7 +4,7 @@
 
 <div th:insert="general.html :: header"></div>
 
-<h2>Login</h2>
+<h3>Login</h3>
 <form name='f' th:action="@{/perform_login}" method='POST' th:object="${object}" >
     <table>
         <tr>
@@ -16,7 +16,7 @@
             <td><input type='password' name='password' /></td>
         </tr>
     </table>
-    <input name="submit" type="submit" value="submit" />
+    <button type="submit">Login</button>
 </form>
 
 <div th:insert="general.html :: footer"></div>
