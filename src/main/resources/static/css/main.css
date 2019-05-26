@@ -3916,3 +3916,14 @@
 			}
 
 		}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 1em 0em 1em 0em;
+  width: 100%;
+  background-color: border-color: #fff;
+  color: #000 !important;
+  text-align: center;
+}
