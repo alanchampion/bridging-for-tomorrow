@@ -116,7 +116,6 @@ public class FileUploadController {
                         }
                     }
                     if(grade == -1 || firstName == -1 || lastName == -1 || school == -1 || gender == -1) {
-                        // TODO Print something out for the user.
                         redirectAttributes.addFlashAttribute("message", "Error reading " + path.getFileName() + ". CSV not formatted correctly.");
                         System.out.println("Error. CSV is not formatted correctly");
                     }

@@ -73,6 +73,4 @@ public class StudentInputController {
             redirectAttributes.addFlashAttribute("message", "Unable to find student to update!");
         return "redirect:/";
     }
-
-    // TODO have a way to remove a student.
 }
