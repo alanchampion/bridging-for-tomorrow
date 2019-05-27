@@ -1,6 +1,7 @@
 package com.meanymellow.bridgingfortomorrow.controller;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,12 +10,14 @@ import java.util.stream.Collectors;
 import com.meanymellow.bridgingfortomorrow.model.Student;
 import com.meanymellow.bridgingfortomorrow.storage.StudentStorage;
 import com.opencsv.CSVReader;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
@@ -28,6 +31,7 @@ public class FileUploadController {
 
     private final StorageService storageService;
     private final StudentStorage studentStorage;
+    private String currentFile;
 
     @Autowired
     public FileUploadController(StorageService storageService, StudentStorage studentStorage) {
@@ -36,13 +40,17 @@ public class FileUploadController {
     }
 
     @GetMapping("/upload")
-    public String listUploadedFiles(Model model) throws IOException {
+    public String uploadForm(Model model) throws IOException {
 
+        return "uploadForm";
+    }
+
+    @GetMapping("/files")
+    public String displayFiles(Model model) {
         model.addAttribute("files", storageService.loadAll().map(
                 path -> path.toString())
                 .collect(Collectors.toList()));
-
-        return "uploadForm";
+        return "displayFiles";
     }
 
     @GetMapping("/files/{filename:.+}")
@@ -59,7 +67,7 @@ public class FileUploadController {
 
         storageService.delete(filename);
         redirectAttributes.addFlashAttribute("message", "You successfully deleted " + filename + "!");
-        return "redirect:/";
+        return "redirect:/files";
     }
 
     @PostMapping("/upload")
@@ -70,14 +78,15 @@ public class FileUploadController {
             return "redirect:upload";
         }
         storageService.store(file);
+        currentFile = StringUtils.cleanPath(file.getOriginalFilename());;
         redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+                "You successfully added students from " + file.getOriginalFilename() + "!");
 
         return "redirect:/addupload";
     }
 
     @GetMapping("/addupload")
-    public String saveStudents(/*Model model, */RedirectAttributes redirectAttributes) throws IOException {
+    public String saveStudents(RedirectAttributes redirectAttributes) throws IOException {
         List<Student> students = new ArrayList<Student>();
 
         /*model.addAttribute("files", storageService.loadAll().map(
@@ -134,16 +143,26 @@ public class FileUploadController {
             }
         });
 
-        storageService.deleteAll();
-        storageService.init();
+        storageService.delete(currentFile);
+        currentFile = "";
+        // storageService.init();
         studentStorage.saveAll(students);
 
         return "redirect:/";
     }
 
     @GetMapping("/deleteall")
-    public String deleteAll(Model model) throws IOException {
+    public String deleteAllStudents(Model model, RedirectAttributes redirectAttributes) throws IOException {
+        redirectAttributes.addFlashAttribute("message", "Removed all students!");
         studentStorage.removeAll();
+        return "redirect:/";
+    }
+
+    @GetMapping("/files/deleteall")
+    public String deleteAllFiles(Model model, RedirectAttributes redirectAttributes) throws IOException {
+        redirectAttributes.addFlashAttribute("message", "Removed all previous files!");
+        storageService.deleteAll();
+        storageService.init();
         return "redirect:/";
     }
 

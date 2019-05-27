@@ -108,7 +108,7 @@ public class StudentInputController {
         String contentType = "text/csv";
         byte[] content = null;
         // Resource file = storageService.loadAsResource(filename);
-        File newFile = new File("groups.csv");
+        File newFile = new File("temp.csv");
         FileWriter outputfile = new FileWriter(newFile);
         CSVWriter csvWriter = new CSVWriter(outputfile);
         String[] header = {"Title", "First Name", "Last Name", "Grade", "School", "Gender"};
@@ -131,6 +131,7 @@ public class StudentInputController {
         content = Files.readAllBytes(newFile.toPath());
         MultipartFile file = new MockMultipartFile(fileName, fileName, contentType, content);
         storageService.store(file);
+        newFile.delete();
 
         Resource resource = storageService.loadAsResource(fileName);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,

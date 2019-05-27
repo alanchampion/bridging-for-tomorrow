@@ -18,6 +18,9 @@
     <div th:if="${message}">
         <h3 align="center" th:text="${message}"/>
     </div>
+    <div th:if="${message==null}">
+        <h3 align="center">Remember that nothing is permanent! Everything is removed when website is not being used!</h3>
+    </div>
 </div>
 
 <div th:fragment="footer">
