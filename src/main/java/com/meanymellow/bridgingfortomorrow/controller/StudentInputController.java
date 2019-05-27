@@ -11,6 +11,7 @@ import com.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -100,41 +99,52 @@ public class StudentInputController {
 
     @GetMapping("/groups/export")
     @ResponseBody
-    public ResponseEntity<Resource> exportGroups(Model model, RedirectAttributes redirectAttributes) throws IOException {
+    public ResponseEntity<Resource> exportGroups(Model model, RedirectAttributes redirectAttributes) {
         // TODO Don't throw exceptions
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("MMMdd_HH-mm");
         String fileName = "group_" + dateFormat.format(date) + ".csv";
         String contentType = "text/csv";
         byte[] content = null;
-        // Resource file = storageService.loadAsResource(filename);
-        File newFile = new File("temp.csv");
-        FileWriter outputfile = new FileWriter(newFile);
-        CSVWriter csvWriter = new CSVWriter(outputfile);
-        String[] header = {"Title", "First Name", "Last Name", "Grade", "School", "Gender"};
-        csvWriter.writeNext(header);
-        for(Group group : groups) {
-            boolean firstStudent = true;
-            for(Student student : group.getStudents()) {
-                if(firstStudent) {
-                    String[] line = {group.getName(), student.getFirstName(), student.getLastName(), student.getGrade(), student.getSchool(), student.getGender()};
-                    csvWriter.writeNext(line);
-                    firstStudent = false;
-                } else {
-                    String[] line = {"", student.getFirstName(), student.getLastName(), student.getGrade(), student.getSchool(), student.getGender()};
-                    csvWriter.writeNext(line);
+
+        try {
+            // Resource file = storageService.loadAsResource(filename);
+            File newFile = new File("temp.csv");
+            FileWriter outputfile = new FileWriter(newFile);
+            CSVWriter csvWriter = new CSVWriter(outputfile);
+            String[] header = {"Title", "First Name", "Last Name", "Grade", "School", "Gender"};
+            csvWriter.writeNext(header);
+            for (Group group : groups) {
+                boolean firstStudent = true;
+                for (Student student : group.getStudents()) {
+                    if (firstStudent) {
+                        String[] line = {group.getName(), student.getFirstName(), student.getLastName(), student.getGrade(), student.getSchool(), student.getGender()};
+                        csvWriter.writeNext(line);
+                        firstStudent = false;
+                    } else {
+                        String[] line = {"", student.getFirstName(), student.getLastName(), student.getGrade(), student.getSchool(), student.getGender()};
+                        csvWriter.writeNext(line);
+                    }
                 }
             }
-        }
-        csvWriter.close();
-        outputfile.close();
-        content = Files.readAllBytes(newFile.toPath());
-        MultipartFile file = new MockMultipartFile(fileName, fileName, contentType, content);
-        storageService.store(file);
-        newFile.delete();
+            csvWriter.close();
+            outputfile.close();
+            content = Files.readAllBytes(newFile.toPath());
+            MultipartFile file = new MockMultipartFile(fileName, fileName, contentType, content);
+            storageService.store(file);
+            newFile.delete();
 
-        Resource resource = storageService.loadAsResource(fileName);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+            Resource resource = storageService.loadAsResource(fileName);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+        return ResponseEntity.notFound().build();
     }
 }
