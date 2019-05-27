@@ -5,7 +5,7 @@ import com.meanymellow.bridgingfortomorrow.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Group {
+public class Group implements Comparable<Group>{
     private List<Student> students;
     private String name;
     private GroupType groupType;
@@ -201,5 +201,18 @@ public class Group {
             }
         }
         return gradescore;
+    }
+
+    public void setGroupType(GroupType groupType) {
+        this.groupType = groupType;
+    }
+
+    @Override
+    public int compareTo(Group g) {
+        int compare = this.getGroupType().compareTo(g.getGroupType());
+        if(compare == 0) {
+            compare = this.getName().compareTo(g.getName());
+        }
+        return compare;
     }
 }

@@ -237,8 +237,10 @@ public class GroupSorter {
             }
         }
         for(Group group : incompleteGroups) {
+            group.setGroupType(GroupType.NONE);
             group.setName("Incomplete Group. These groups should be redistributed or retry sorting below.");
         }
+        badGroup.setGroupType(GroupType.BAD);
         badGroup.setName("Error group. Try to retry the sorting below.");
 
         List<Group> groups = new ArrayList<>();

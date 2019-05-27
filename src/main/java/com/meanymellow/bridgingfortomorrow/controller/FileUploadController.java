@@ -77,7 +77,7 @@ public class FileUploadController {
     }
 
     @GetMapping("/addupload")
-    public String createGroups(/*Model model, */RedirectAttributes redirectAttributes) throws IOException {
+    public String saveStudents(/*Model model, */RedirectAttributes redirectAttributes) throws IOException {
         List<Student> students = new ArrayList<Student>();
 
         /*model.addAttribute("files", storageService.loadAll().map(
