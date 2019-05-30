@@ -38,7 +38,7 @@ public class Group implements Comparable<Group>{
             return true;
         }
 
-        if(students.size() >= 9) {
+        if(students.size() >= 8 || (students.size() >= 6 && groupType == GroupType.KFIRST)) {
             return false;
         }
 
@@ -59,7 +59,7 @@ public class Group implements Comparable<Group>{
 
     private void updateQuality(Quality studentQuality) {
         tempQuality = Util.combineQualities(this.tempQuality, studentQuality);
-        if(students.size() > 9 || students.size() < 7) {
+        if(students.size() > 8 || students.size() < 6 || (students.size() > 6 && groupType == GroupType.KFIRST)) {
             quality = Quality.BAD;
         } else {
             quality = tempQuality;
@@ -83,7 +83,7 @@ public class Group implements Comparable<Group>{
             return Quality.PERFECT;
         }
 
-        if(students.size() >= 9) {
+        if(students.size() >= 8 || (students.size() >= 6 && groupType == GroupType.KFIRST)) {
             return Quality.BAD;
         }
 
@@ -122,7 +122,7 @@ public class Group implements Comparable<Group>{
     }
 
     public boolean canAddStudent(Student student) {
-        if(students.size() >= 9) {
+        if(students.size() >= 8 || (students.size() >= 6 && groupType == GroupType.KFIRST)) {
             return false;
         }
 
