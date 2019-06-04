@@ -204,7 +204,7 @@ public class GroupSorter {
     }
 
     public List<Group> getGroups() {
-        int redGroups = 1, orangeGroups = 1, yellowGroups = 1;
+        int redGroups = 1, blueGroups = 1, yellowGroups = 1;
 
         for(Group group : okGroups) {
             GroupType type = group.getGroupType();
@@ -212,8 +212,8 @@ public class GroupSorter {
                 group.setName("Red Group " + redGroups);
                 redGroups++;
             } else if(type == GroupType.SECONDTHIRD) {
-                group.setName("Orange Group " + orangeGroups);
-                orangeGroups++;
+                group.setName("Blue Group " + blueGroups);
+                blueGroups++;
             } else if(type == GroupType.FOURTHFIFTH) {
                 group.setName("Yellow Group " + yellowGroups);
                 yellowGroups++;
@@ -227,8 +227,8 @@ public class GroupSorter {
                 group.setName("Red Group " + redGroups);
                 redGroups++;
             } else if(type == GroupType.SECONDTHIRD) {
-                group.setName("Orange Group " + orangeGroups);
-                orangeGroups++;
+                group.setName("Blue Group " + blueGroups);
+                blueGroups++;
             } else if(type == GroupType.FOURTHFIFTH) {
                 group.setName("Yellow Group " + yellowGroups);
                 yellowGroups++;
