@@ -59,7 +59,7 @@ public class Group implements Comparable<Group>{
 
     private void updateQuality(Quality studentQuality) {
         tempQuality = Util.combineQualities(this.tempQuality, studentQuality);
-        if(students.size() != 8 || (students.size() != 6 && groupType == GroupType.KFIRST)) {
+        if((students.size() != 8 && groupType != GroupType.KFIRST) || (students.size() != 6 && groupType == GroupType.KFIRST)) {
             quality = Quality.BAD;
         } else {
             quality = tempQuality;
