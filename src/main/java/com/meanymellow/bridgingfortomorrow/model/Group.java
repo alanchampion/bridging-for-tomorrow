@@ -59,7 +59,7 @@ public class Group implements Comparable<Group>{
 
     private void updateQuality(Quality studentQuality) {
         tempQuality = Util.combineQualities(this.tempQuality, studentQuality);
-        if(students.size() > 8 || students.size() < 6 || (students.size() > 6 && groupType == GroupType.KFIRST)) {
+        if(students.size() != 8 || (students.size() != 6 && groupType == GroupType.KFIRST)) {
             quality = Quality.BAD;
         } else {
             quality = tempQuality;
@@ -88,32 +88,16 @@ public class Group implements Comparable<Group>{
         }
 
         Quality gradescore = scoreGrade(student);
+        Quality friend = scoreFriend(student);
 
-        Quality friend = Quality.BAD;
-        List<Integer> studentIndex = new ArrayList<>();
-        boolean alreadyHasFriend = false;
-        for(int i = 0; i < students.size(); i++) {
-            if(student.getSchool().equals(students.get(i).getSchool())){
-                if(student.getGrade().equals(students.get(i).getGrade())) {
-                    if(student.getGender().equals(students.get(i).getGender())) {
-                        if(!alreadyHasFriend) {
-                            friend = Quality.PERFECT;
-                            alreadyHasFriend = true;
-                        } else {
-                            friend = Quality.GOOD;
-                        }
-                    }
-                }
-            }
+        if(gradescore == Quality.BAD) {
+            return Quality.BAD;
         }
 
         if(friend == Quality.PERFECT) {
-            if(gradescore == Quality.BAD) {
-                return gradescore;
-            }
             return Util.combineQualities(gradescore, friend);
         } else if (friend == Quality.GOOD) {
-            return gradescore;
+            return Util.combineQualities(gradescore, friend);
         } else if(friend == Quality.OK) {
             return gradescore;
         }
@@ -158,6 +142,27 @@ public class Group implements Comparable<Group>{
 
     public GroupType getGroupType(){
         return groupType;
+    }
+
+    private Quality scoreFriend(Student student) {
+        Quality score = Quality.BAD;
+        boolean alreadyHasFriend = false;
+        for(int i = 0; i < students.size(); i++) {
+            if(student.getSchool().equals(students.get(i).getSchool())){
+                if(student.getGrade().equals(students.get(i).getGrade())) {
+                    if(student.getGender().equals(students.get(i).getGender())) {
+                        if(!alreadyHasFriend) {
+                            score = Quality.PERFECT;
+                            alreadyHasFriend = true;
+                        } else {
+                            score = Quality.OK;
+                        }
+                    }
+                }
+            }
+        }
+
+        return score;
     }
 
     private Quality scoreGrade(Student student) {
